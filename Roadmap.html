@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Love Journey 💕</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Confetti -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  overflow-x: hidden;
+  color: #fff;
+  min-height: 100vh;
+  position: relative;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animated particles background */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.particle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: float 20s infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+  33% { transform: translateY(-100px) translateX(100px) rotate(120deg); }
+  66% { transform: translateY(-50px) translateX(-100px) rotate(240deg); }
+}
+
+/* Floating Hearts */
+.heart {
+  position: fixed;
+  bottom: -50px;
+  font-size: 24px;
+  animation: floatUp 8s linear infinite;
+  opacity: 0;
+  z-index: 2;
+  filter: drop-shadow(0 0 10px rgba(255, 64, 129, 0.6));
+}
+
+@keyframes floatUp {
+  0% { 
+    transform: translateY(0) translateX(0) rotate(0deg) scale(0.5); 
+    opacity: 0;
+  }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { 
+    transform: translateY(-120vh) translateX(100px) rotate(360deg) scale(1.5); 
+    opacity: 0;
+  }
+}
+
+/* Main Content */
+.content-wrapper {
+  position: relative;
+  z-index: 3;
+}
+
+header {
+  padding: 80px 20px 40px;
+  text-align: center;
+  animation: fadeInDown 1s ease;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 56px;
+  margin-bottom: 15px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(45deg, #fff, #ffd1dc, #fff);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: textShimmer 3s ease infinite;
+}
+
+@keyframes textShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+header p {
+  font-size: 18px;
+  opacity: 0.95;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Counter */
+.stats-container {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 40px 20px 30px;
+  flex-wrap: wrap;
+}
+
+.stat-box {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 20px 30px;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-box:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.stat-number {
+  font-size: 36px;
+  font-weight: 700;
+  display: block;
+}
+
+.stat-label {
+  font-size: 14px;
+  opacity: 0.9;
+  margin-top: 5px;
+}
+
+.progress-container {
+  width: 85%;
+  max-width: 600px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 30px auto;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ff6b6b, #ff4081, #e91e63);
+  background-size: 200% 100%;
+  animation: progressShine 2s ease infinite;
+  transition: width 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow: 0 0 20px rgba(255, 64, 129, 0.5);
+}
+
+@keyframes progressShine {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Timeline */
+.timeline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 80px 20px;
+  flex-wrap: wrap;
+  gap: 60px;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  width: 70%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  top: 50%;
+  left: 15%;
+  z-index: 0;
+}
+
+.milestone {
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+  animation: fadeIn 0.6s ease backwards;
+}
+
+.milestone:nth-child(1) { animation-delay: 0.1s; }
+.milestone:nth-child(2) { animation-delay: 0.2s; }
+.milestone:nth-child(3) { animation-delay: 0.3s; }
+.milestone:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.milestone:hover {
+  transform: translateY(-10px);
+}
+
+.dot {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #ffffff, #ffd1dc);
+  border-radius: 50%;
+  margin: 0 auto 15px;
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.4), 0 0 0 0 rgba(255, 255, 255, 0.7);
+  transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  border: 4px solid rgba(255, 255, 255, 0.5);
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 8px 30px rgba(255, 255, 255, 0.4), 0 0 0 0 rgba(255, 255, 255, 0.7); }
+  50% { box-shadow: 0 8px 40px rgba(255, 255, 255, 0.6), 0 0 0 15px rgba(255, 255, 255, 0); }
+}
+
+.milestone:hover .dot {
+  transform: scale(1.2) rotate(360deg);
+  background: linear-gradient(135deg, #ff4081, #e91e63);
+  box-shadow: 0 12px 40px rgba(255, 64, 129, 0.6), 0 0 0 20px rgba(255, 64, 129, 0);
+}
+
+.milestone p {
+  font-size: 16px;
+  font-weight: 500;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.locked .dot {
+  background: linear-gradient(135deg, #9e9e9e, #757575);
+  animation: shake 2s ease infinite;
+}
+
+@keyframes shake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+.locked:hover .dot {
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  transform: scale(1.2);
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 1000;
+  animation: fadeInModal 0.3s ease;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  color: #333;
+  padding: 40px;
+  border-radius: 30px;
+  max-width: 500px;
+  max-height: 90vh;
+  width: 100%;
+  text-align: center;
+  animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 64, 129, 0.1), transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes popIn {
+  from { transform: scale(0.3) rotate(-10deg); opacity: 0; }
+  to { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.modal-content > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Scrollable text container */
+.modal-text-container {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 300px;
+  margin: 20px 0;
+  padding-right: 10px;
+}
+
+/* Custom scrollbar for text */
+.modal-text-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-text-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.modal-text-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #ff6b6b, #ff4081);
+  border-radius: 10px;
+}
+
+.modal-text-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #ff4081, #e91e63);
+}
+
+.modal-content h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.modal img {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.modal img:hover {
+  transform: scale(1.05);
+}
+
+.modal-content p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #555;
+  margin: 0;
+  text-align: left;
+}
+
+button {
+  margin-top: 20px;
+  padding: 14px 40px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #ff6b6b, #ff4081);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(255, 64, 129, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(255, 64, 129, 0.6);
+  background: linear-gradient(135deg, #ff4081, #e91e63);
+}
+
+button:active {
+  transform: translateY(-1px);
+}
+
+input {
+  padding: 14px 20px;
+  margin-top: 15px;
+  border-radius: 15px;
+  border: 2px solid #ddd;
+  width: 85%;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+input:focus {
+  outline: none;
+  border-color: #ff4081;
+  box-shadow: 0 0 0 4px rgba(255, 64, 129, 0.1);
+  transform: scale(1.02);
+}
+
+.final-message {
+  font-size: 36px;
+  font-family: 'Playfair Display', serif;
+  margin: 60px 20px;
+  display: none;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  animation: finalFade 1s ease;
+  background: linear-gradient(45deg, #fff, #ffd1dc, #fff);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: finalFade 1s ease, textShimmer 3s ease infinite;
+}
+
+@keyframes finalFade {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Love Letter Effect */
+.love-letter {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  display: none;
+  animation: unfold 1s ease;
+}
+
+@keyframes unfold {
+  from { transform: rotateX(-90deg); opacity: 0; }
+  to { transform: rotateX(0deg); opacity: 1; }
+}
+
+.love-letter p {
+  color: #555;
+  font-size: 18px;
+  line-height: 2;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  header h1 { font-size: 36px; }
+  .timeline { gap: 40px; margin: 60px 20px; }
+  .timeline::before { display: none; }
+  .stat-box { padding: 15px 20px; }
+  .stat-number { font-size: 28px; }
+  .modal-content { 
+    padding: 30px 20px;
+    max-height: 85vh;
+  }
+  .modal-content p {
+    font-size: 15px;
+  }
+  .final-message { font-size: 28px; }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Animated Particles -->
+<div class="particles" id="particles"></div>
+
+<div class="content-wrapper">
+
+<header>
+  <h1>Our Love Journey 💕</h1>
+  <p>Every moment with you became a memory I never want to lose. This is our story, written in the stars and sealed with love.</p>
+  
+  <div class="stats-container">
+    <div class="stat-box">
+      <span class="stat-number" id="daysCounter">0</span>
+      <span class="stat-label">Days Together</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-number" id="memoriesCounter">0</span>
+      <span class="stat-label">Memories Created</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-number">∞</span>
+      <span class="stat-label">More To Come</span>
+    </div>
+  </div>
+
+  <div class="progress-container">
+    <div class="progress-bar" id="progress"></div>
+  </div>
+</header>
+
+<section class="timeline">
+
+  <div class="milestone" onclick="openMemory(0)">
+    <div class="dot">👀</div>
+    <p>First Meet</p>
+  </div>
+
+  <div class="milestone" onclick="openMemory(1)">
+    <div class="dot">💬</div>
+    <p>First Chat</p>
+  </div>
+
+  <div class="milestone" onclick="openMemory(2)">
+    <div class="dot">🌸</div>
+    <p>First Date</p>
+  </div>
+
+  <div class="milestone locked" onclick="unlockMemory()">
+    <div class="dot">🔒</div>
+    <p>Secret Memory</p>
+  </div>
+
+</section>
+
+<div class="final-message" id="finalMessage">
+
+</div>
+
+<div class="love-letter" id="loveLetter">
+  <p>"I Love You My Undakanniiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"</p>
+</div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+  <div class="modal-content" id="modalContent"></div>
+</div>
+
+<script>
+
+const memories = [
+  {
+    title: "First Meet 👀",
+    img: "https://christuniversity.in/uploads/studentlife/large/iconcafeteria_20201204040516..jpg",
+    text: "That day when our conversation started, I knew something special was beginning. Your words made me smile in ways I never expected. Chatgpt thanna words anellm sathyam ann ,nmml adhyam aa lift nte avde vech kandappo you talked a lot like u knew me before and i was so impressed cause aa samayath enik vendath nallonam samsarikunna oraal ayirunnu and you were so perfect for it.The image above is so special because njan ivde eppozhum irikum ninne kaath ninte nootam kittaan vendi,Ormyindaloleee."
+  },
+  {
+    title: "First Message 💬",
+    img: "https://cdn.prod.website-files.com/64baacfcb337b7364622226f/66fc3cec142d82d7e94725fb_styled-instagram-icon.jpg",
+    text: "Me : Onn kaanan pattuo ? You : Friends ne vilicha kozhpindo . Stupid Anett "
+  },
+  {
+    title: "First Date 🌸",
+    img: "https://content3.jdmagicbox.com/v2/comp/bangalore/h8/080pxx80.xx80.190802210936.z4h8/catalogue/joses-mess-sadduguntepalya-road-sadduguntepalya-bangalore-mess-o5lyxqkad4.jpg",
+    text: "I will call it a Date, saadharanakarante Date. Dhe avde irunn chaya kudicharunn nmmde first date."
+  }
+];
+
+let clickedCount = 0;
+const totalMilestones = 4;
+
+// Animated counters
+function animateCounter(id, target, duration = 2000) {
+  const element = document.getElementById(id);
+  const start = 0;
+  const increment = target / (duration / 16);
+  let current = start;
+  
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= target) {
+      element.textContent = target;
+      clearInterval(timer);
+    } else {
+      element.textContent = Math.floor(current);
+    }
+  }, 16);
+}
+
+// Start counters on load
+window.addEventListener('load', () => {
+  animateCounter('daysCounter', 439, 2000);
+  animateCounter('memoriesCounter', 1000, 2500);
+});
+
+function openMemory(index) {
+  const memory = memories[index];
+  const modal = document.getElementById("modal");
+  const content = document.getElementById("modalContent");
+
+  content.innerHTML = `
+    <h2>${memory.title}</h2>
+    <img src="${memory.img}" alt="${memory.title}">
+    <div class="modal-text-container">
+      <p>${memory.text}</p>
+    </div>
+    <button onclick="closeModal()">Continue Our Journey</button>
+  `;
+
+  modal.style.display = "flex";
+  updateProgress();
+  
+  // Celebration confetti
+  confetti({
+    particleCount: 50,
+    spread: 60,
+    origin: { y: 0.6 }
+  });
+}
+
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+}
+
+function updateProgress() {
+  clickedCount++;
+  let percent = (clickedCount / totalMilestones) * 100;
+  document.getElementById("progress").style.width = percent + "%";
+
+  if (percent >= 100) {
+    setTimeout(() => {
+      document.getElementById("finalMessage").style.display = "block";
+      document.getElementById("loveLetter").style.display = "block";
+      
+      // Grand finale confetti
+      const duration = 3000;
+      const end = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 7,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#ff6b6b', '#ff4081', '#e91e63', '#ffd1dc']
+        });
+        confetti({
+          particleCount: 7,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#ff6b6b', '#ff4081', '#e91e63', '#ffd1dc']
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+    }, 500);
+  }
+}
+
+function unlockMemory() {
+  const modal = document.getElementById("modal");
+  const content = document.getElementById("modalContent");
+
+  content.innerHTML = `
+    <h2>🔐 Unlock Our Secret</h2>
+    <div class="modal-text-container" style="max-height: none;">
+      <p>Enter the word that defines us...</p>
+    </div>
+    <input type="text" id="secretInput" placeholder="Type the magic word..." autofocus>
+    <button onclick="checkSecret()">Unlock Memory</button>
+  `;
+
+  modal.style.display = "flex";
+  
+  // Focus input after modal animation
+  setTimeout(() => {
+    document.getElementById("secretInput").focus();
+  }, 300);
+  
+  // Allow Enter key to submit
+  setTimeout(() => {
+    document.getElementById("secretInput").addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') checkSecret();
+    });
+  }, 300);
+}
+
+function checkSecret() {
+  const value = document.getElementById("secretInput").value;
+  if (value.toLowerCase() === "ingane ottak kednna mathiyo") {
+    document.getElementById("modalContent").innerHTML = `
+      <h2>Secret Memory Unlocked! 💎</h2>
+      <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=800&q=80" alt="Secret Memory">
+      <div class="modal-text-container">
+        <p> Enne Ithrem tension adipicha oru word illa....❤️</p>
+      </div>
+      <button onclick="closeModal()">Forever & Always</button>
+    `;
+    updateProgress();
+    
+    // Special confetti for unlocking
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#ffd700', '#ffed4e', '#fff']
+    });
+  } else {
+    const input = document.getElementById("secretInput");
+    input.style.animation = 'shake 0.5s';
+    input.value = '';
+    setTimeout(() => {
+      input.style.animation = '';
+      input.placeholder = 'Try again... think about us 💕';
+    }, 500);
+  }
+}
+
+/* Floating hearts with variety */
+const heartEmojis = ['💖', '💕', '💗', '💓', '💝', '❤️', '🩷'];
+
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (Math.random() * 4 + 6) + "s";
+  heart.style.fontSize = (Math.random() * 10 + 20) + "px";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 10000);
+}, 600);
+
+/* Animated particles */
+function createParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 15; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.width = (Math.random() * 4 + 2) + 'px';
+    particle.style.height = particle.style.width;
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.top = Math.random() * 100 + '%';
+    particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+    particle.style.animationDelay = (Math.random() * 5) + 's';
+    container.appendChild(particle);
+  }
+}
+
+createParticles();
+
+// Close modal on outside click
+document.getElementById('modal').addEventListener('click', (e) => {
+  if (e.target.id === 'modal') {
+    closeModal();
+  }
+});
+
+</script>
+
+</body>
+</html>
